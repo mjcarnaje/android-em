@@ -1,0 +1,40 @@
+{
+  "name": "android-em",
+  "version": "1.0.3",
+  "description": "A simple command to start an Android emulator on your local machine",
+  "bin": "build/index.js",
+  "main": "build/index.js",
+  "scripts": {
+    "clean": "rimraf coverage build .tmp",
+    "compile": "babel src/ -d build/",
+    "watch": "npm run compile -- --watch",
+    "release": "np",
+    "precompile": "npm run clean",
+    "prepublish": "npm run compile",
+    "prerelease": "npm run compile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjcarnaje/android-em.git"
+  },
+  "keywords": [
+    "emulator"
+  ],
+  "author": "Mj Carnaje",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjcarnaje/android-em/issues"
+  },
+  "homepage": "https://github.com/mjcarnaje/android-em#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "inquirer": "^8.2.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "np": "^7.6.1",
+    "rimraf": "^3.0.2"
+  }
+}
