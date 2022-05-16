@@ -5,6 +5,7 @@
   "bin": "build/index.js",
   "main": "build/index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\"",
     "clean": "rimraf coverage build .tmp",
     "compile": "babel src/ -d build/",
     "watch": "npm run compile -- --watch",
