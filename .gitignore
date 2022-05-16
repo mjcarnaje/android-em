@@ -1,6 +1,6 @@
+build/
 node_modules/
 *.log
 .idea/
 .vscode/
-build/
 .DS_Store
