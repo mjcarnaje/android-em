@@ -1,6 +1,6 @@
 {
   "name": "android-em",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A simple command to start an Android emulator on your local machine",
   "bin": "build/index.js",
   "main": "build/index.js",
