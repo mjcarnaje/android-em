@@ -1,26 +1,31 @@
 #!/usr/bin/env node
 import chalk from "chalk";
 import { execFileSync, spawnSync } from "child_process";
+import inquirer from "inquirer";
 import { platform } from "os";
 import { join, normalize } from "path";
-import inquirer from "inquirer";
 
-const emulatorPath = normalize(
+const EMULATOR_PATH = normalize(
   join(process.env.ANDROID_HOME, "/emulator/emulator")
 );
 
 function getEmulators() {
-  const emulators = execFileSync(emulatorPath, ["-list-avds"], {
+  const emulators = execFileSync(EMULATOR_PATH, ["-list-avds"], {
     encoding: "utf8",
   })
     .replace(/\n$/, "")
     .split("\n");
 
-  return emulators.filter((e) => !!e);
+  return emulators.filter(Boolean);
 }
 
 async function main() {
   const emulators = getEmulators();
+
+  if (emulators.length === 0) {
+    console.log(chalk.red("No emulators found"));
+    process.exit(1);
+  }
 
   const questions = [
     {
@@ -33,7 +38,11 @@ async function main() {
 
   const answers = await inquirer.prompt(questions);
 
-  console.log(chalk.green(`Starting emulator ${answers.emulator}`));
+  const cleanAnswers = answers.emulator.replace(/\n|\r|\W/g, "");
+
+  console.log(chalk.green("====================================="));
+  console.log(chalk.green(`Emulator ${cleanAnswers} is launched`));
+  console.log(chalk.green("====================================="));
 
   const options = {};
 
@@ -42,20 +51,12 @@ async function main() {
   }
 
   const runOnEmulator = spawnSync(
-    emulatorPath,
+    EMULATOR_PATH,
     ["-avd", answers.emulator],
     options
   );
 
-  console.log(chalk.green(`Emulator ${answers.emulator} started`));
-
-  console.log(chalk.yellow(runOnEmulator.stdout.toString()));
-
-  if (runOnEmulator.stderr.toString()) {
-    console.log(chalk.red(runOnEmulator.stderr.toString()));
-  }
-
-  process.exit(1);
+  process.exit(0);
 }
 
 main();
